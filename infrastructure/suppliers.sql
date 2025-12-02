@@ -1,9 +1,18 @@
-CREATE TABLE suppliers (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    contact_email VARCHAR(255)
+-- Run this against your local or Azure SQL database
+
+CREATE TABLE Suppliers (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(128) NOT NULL,
+    Commodity NVARCHAR(64) NOT NULL,
+    ContactEmail NVARCHAR(128) NOT NULL,
+    CreatedAt DATETIME NOT NULL DEFAULT(GETUTCDATE())
 );
 
-INSERT INTO suppliers (id, name, contact_email) VALUES
-(1, 'Supplier A', 'contact@supplier-a.com'),
-(2, 'Supplier B', 'contact@supplier-b.com');
+CREATE TABLE Documents (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    FileName NVARCHAR(256) NOT NULL,
+    BlobUri NVARCHAR(512) NOT NULL,
+    SupplierId INT NOT NULL,
+    UploadedAt DATETIME NOT NULL DEFAULT(GETUTCDATE()),
+    CONSTRAINT FK_Documents_Suppliers FOREIGN KEY (SupplierId) REFERENCES Suppliers(Id)
+);
