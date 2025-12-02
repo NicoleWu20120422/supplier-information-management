@@ -1,15 +1,25 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using SupplierInformationManagement.Api.Data;
+using SupplierInformationManagement.Api.Services;
 
+// Create builder
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<SimDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SIMConnection"))
+);
+
+builder.Services.AddScoped<SupplierService>();
+builder.Services.AddScoped<DocumentService>();
+builder.Services.AddScoped<WorkflowService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,19 +27,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
 
-// Define the /suppliers endpoint
-app.MapGet("/suppliers", () => 
-{
-    // TODO: Implement the suppliers endpoint
-    return Results.Ok(new List<string> { "Supplier 1", "Supplier 2" });
-});
-
-// Define the /documents endpoint
-app.MapGet("/documents", () => 
-{
-    // TODO: Implement the documents endpoint
-    return Results.Ok(new List<string> { "Document 1", "Document 2" });
-});
+app.MapControllers();
 
 app.Run();
