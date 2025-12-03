@@ -17,7 +17,16 @@ builder.Services.AddDbContext<SimDbContext>(options =>
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<DocumentService>();
 builder.Services.AddScoped<WorkflowService>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
 var app = builder.Build();
 
 // Configure middleware
@@ -29,6 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
