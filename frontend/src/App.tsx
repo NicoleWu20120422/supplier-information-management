@@ -1,1 +1,23 @@
-import React from "react";import { BrowserRouter, Routes, Route } from "react-router-dom";import Navbar from "./components/Navbar";import SupplierRegister from "./pages/SupplierRegister";import SupplierOnboarding from "./pages/SupplierOnboarding";import Dashboard from "./pages/Dashboard";function App() {return (<BrowserRouter><Navbar /><Routes><Route path="/" element={<Dashboard />} /><Route path="/register" element={<SupplierRegister />} /><Route path="/onboarding/:supplierId" element={<SupplierOnboarding />} /></Routes></BrowserRouter>);}export default App;
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Suppliers from './pages/Suppliers';
+import Documents from './pages/Documents';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <nav style={{ padding: '1rem', borderBottom: '1px solid #eee' }}>
+        <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+        <Link to="/suppliers" style={{ marginRight: '1rem' }}>Suppliers</Link>
+        <Link to="/documents">Documents</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/suppliers" element={<Suppliers />} />
+        <Route path="/documents" element={<Documents />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
