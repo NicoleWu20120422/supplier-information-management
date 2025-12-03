@@ -13,11 +13,27 @@ function RegisterSupplier() {
     setForm({...form, [e.target.name]: e.target.value});
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    alert('Registered mock supplier:\n' + JSON.stringify(form, null, 2));
-    // TODO: wire up to backend API
+async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/supplier`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form)
+    });
+    if (response.ok) {
+      alert('Supplier registered successfully!');
+      // Optionally, reset form fields:
+      // setForm({name: '', commodity: '', contactEmail: '', companyAddress: '', taxId: ''});
+    } else {
+      alert('Failed to register supplier.');
+    }
+  } catch (err) {
+    alert(`Error: ${err}`);
   }
+}
 
   return (
     <div style={{padding: '2rem', maxWidth: 480}}>
