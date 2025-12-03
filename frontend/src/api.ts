@@ -1,0 +1,1 @@
+import axios from "axios";// Auth token injection can be handled here in interceptorconst api = axios.create({baseURL: "/api",timeout: 10000,});export default api;
