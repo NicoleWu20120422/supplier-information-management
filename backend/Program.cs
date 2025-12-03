@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SupplierInformationManagement.Api.Data;
 using SupplierInformationManagement.Api.Services;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Create builder
 var builder = WebApplication.CreateBuilder(args);
 
