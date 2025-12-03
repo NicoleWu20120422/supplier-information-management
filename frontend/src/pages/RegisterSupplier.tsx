@@ -16,7 +16,7 @@ function RegisterSupplier() {
 async function handleSubmit(e: React.FormEvent) {
   e.preventDefault();
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/supplier`, {
+    const response = await fetch('${import.meta.env.VITE_API_URL}/api/supplier', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
