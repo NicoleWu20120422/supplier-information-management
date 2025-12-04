@@ -72,3 +72,5 @@ C:\SIM\supplier-information-management\backend\obj\Debug\net8.0\refint\SupplierI
 C:\SIM\supplier-information-management\backend\obj\Debug\net8.0\SupplierInformationManagement.Api.pdb
 C:\SIM\supplier-information-management\backend\obj\Debug\net8.0\SupplierInformationManagement.Api.genruntimeconfig.cache
 C:\SIM\supplier-information-management\backend\obj\Debug\net8.0\ref\SupplierInformationManagement.Api.dll
+C:\SIM\supplier-information-management\backend\bin\Debug\net8.0\package-lock.json
+C:\SIM\supplier-information-management\backend\bin\Debug\net8.0\package.json
