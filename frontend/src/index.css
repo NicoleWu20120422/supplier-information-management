@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(220, 15%, 97%);
+  --foreground: hsl(220, 20%, 20%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(220, 20%, 20%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(220, 20%, 20%);
+  --primary: hsl(213, 85%, 55%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(220, 15%, 95%);
+  --secondary-foreground: hsl(220, 20%, 20%);
+  --muted: hsl(220, 15%, 95%);
+  --muted-foreground: hsl(220, 20%, 50%);
+  --accent: hsl(204, 85%, 65%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 85%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(220, 15%, 88%);
+  --input: hsl(220, 15%, 88%);
+  --ring: hsl(213, 85%, 55%);
+  --chart-1: hsl(213, 85%, 55%);
+  --chart-2: hsl(204, 85%, 65%);
+  --chart-3: hsl(120, 85%, 55%);
+  --chart-4: hsl(35, 85%, 65%);
+  --chart-5: hsl(0, 85%, 60%);
+  --sidebar: hsl(180, 6.6667%, 97.0588%);
+  --sidebar-foreground: hsl(210, 25%, 7.8431%);
+  --sidebar-primary: hsl(203.8863, 88.2845%, 53.1373%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(211.5789, 51.3514%, 92.7451%);
+  --sidebar-accent-foreground: hsl(203.8863, 88.2845%, 53.1373%);
+  --sidebar-border: hsl(205.0000, 25.0000%, 90.5882%);
+  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: 8px;
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 1px 2px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 1px 2px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 2px 4px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 4px 6px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00), 0px 8px 10px -1px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169, 89.1213%, 53.1373%, 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: hsl(220, 20%, 8%);
+  --foreground: hsl(220, 15%, 92%);
+  --card: hsl(220, 20%, 12%);
+  --card-foreground: hsl(220, 15%, 92%);
+  --popover: hsl(220, 20%, 12%);
+  --popover-foreground: hsl(220, 15%, 92%);
+  --primary: hsl(213, 75%, 65%);
+  --primary-foreground: hsl(220, 20%, 8%);
+  --secondary: hsl(220, 20%, 15%);
+  --secondary-foreground: hsl(220, 15%, 92%);
+  --muted: hsl(220, 20%, 15%);
+  --muted-foreground: hsl(220, 15%, 60%);
+  --accent: hsl(204, 75%, 70%);
+  --accent-foreground: hsl(220, 20%, 8%);
+  --destructive: hsl(0, 75%, 65%);
+  --destructive-foreground: hsl(220, 15%, 92%);
+  --border: hsl(220, 20%, 20%);
+  --input: hsl(220, 20%, 20%);
+  --ring: hsl(213, 75%, 65%);
+  --sidebar: hsl(228, 9.8039%, 10%);
+  --sidebar-foreground: hsl(0, 0%, 85.0980%);
+  --sidebar-primary: hsl(202.8169, 89.1213%, 53.1373%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(205.7143, 70%, 7.8431%);
+  --sidebar-accent-foreground: hsl(203.7736, 87.6033%, 52.5490%);
+  --sidebar-border: hsl(205.7143, 15.7895%, 26.0784%);
+  --sidebar-ring: hsl(202.8169, 89.1213%, 53.1373%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+.supplier-card {
+  transition: all 0.2s ease;
+}
+
+.supplier-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+
+.matrix-quadrant {
+  min-height: 200px;
+  background: var(--card);
+  position: relative;
+  overflow: hidden;
+}
+
+.supplier-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.supplier-dot:hover {
+  transform: scale(1.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.supplier-dot.dragging {
+  z-index: 50;
+  transform: scale(1.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.risk-high { 
+  background-color: hsl(0, 85%, 60%); 
+}
+
+.risk-medium { 
+  background-color: hsl(35, 85%, 65%); 
+}
+
+.risk-low { 
+  background-color: hsl(120, 85%, 55%); 
+}
+
+.quadrant-strategic {
+  background: hsl(0, 85%, 96%);
+  border: 2px dashed hsl(0, 85%, 80%);
+}
+
+.quadrant-leverage {
+  background: hsl(213, 85%, 96%);
+  border: 2px dashed hsl(213, 85%, 80%);
+}
+
+.quadrant-bottleneck {
+  background: hsl(35, 85%, 96%);
+  border: 2px dashed hsl(35, 85%, 80%);
+}
+
+.quadrant-non-critical {
+  background: hsl(220, 15%, 97%);
+  border: 2px dashed hsl(220, 15%, 85%);
+}
+
+.chart-container {
+  height: 300px;
+  background: var(--card);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

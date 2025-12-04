@@ -1,23 +1,39 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import RegisterSupplier from './pages/RegisterSupplier';
-import OnboardingApprovals from './pages/OnboardingApprovals';
+import { Switch, Route } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Header from "@/components/layout/header";
+import Dashboard from "@/pages/dashboard";
+import Suppliers from "@/pages/suppliers";
+import SupplierDetail from "@/pages/supplier-detail";
+import Matrix from "@/pages/matrix";
+import NotFound from "@/pages/not-found";
+
+function Router() {
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <Switch>
+        <Route path="/" component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/matrix" component={Matrix} />
+        <Route path="/suppliers" component={Suppliers} />
+        <Route path="/suppliers/:id" component={SupplierDetail} />
+        <Route component={NotFound} />
+      </Switch>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <BrowserRouter>
-      <nav style={{ padding: '1rem', borderBottom: '1px solid #eee', marginBottom: '1rem' }}>
-        <Link to="/" style={{ marginRight: '1rem' }}>Dashboard</Link>
-        <Link to="/register" style={{ marginRight: '1rem' }}>Register Supplier</Link>
-        <Link to="/approvals">Onboarding Approvals</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/register" element={<RegisterSupplier />} />
-        <Route path="/approvals" element={<OnboardingApprovals />} />
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Router />
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }
 
