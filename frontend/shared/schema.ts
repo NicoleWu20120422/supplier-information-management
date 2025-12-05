@@ -5,9 +5,18 @@ export const insertSupplierSchema = z.object({
   name: z.string(),
   category: z.string(),
   segmentType: z.string(),
-  annualSpend: z.number().optional(),
-  riskScore: z.number().optional(),
-  performanceScore: z.number().optional(),
+  annualSpend: z.union([z.number(), z.string()]).optional().transform(val => {
+    if (typeof val === 'string') return parseFloat(val);
+    return val;
+  }),
+  riskScore: z.union([z.number(), z.string()]).optional().transform(val => {
+    if (typeof val === 'string') return parseFloat(val);
+    return val;
+  }),
+  performanceScore: z.union([z.number(), z.string()]).optional().transform(val => {
+    if (typeof val === 'string') return parseFloat(val);
+    return val;
+  }),
   innovationPotential: z.number().optional(),
   supplierComplexity: z.string().optional(),
   marketAvailability: z.string().optional(),
@@ -25,8 +34,9 @@ export const insertSupplierSchema = z.object({
 export type InsertSupplier = z.infer<typeof insertSupplierSchema>;
 
 // Example response type (what your API returns to frontend)
+// Backend returns Id as int, but we'll accept both string and number
 export const supplierSchema = insertSupplierSchema.extend({
-  id: z.string(),
+  id: z.union([z.string(), z.number()]).transform(val => String(val)),
   createdAt: z.string().optional(), // or change to z.date()
   updatedAt: z.string().optional(),
 });

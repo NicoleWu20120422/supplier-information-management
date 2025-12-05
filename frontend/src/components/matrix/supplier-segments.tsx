@@ -15,12 +15,20 @@ interface SegmentCardProps {
 
 function SegmentCard({ segmentKey, segment, suppliers }: SegmentCardProps) {
   const segmentSuppliers = suppliers.filter(s => s.segmentType === segmentKey);
-  const totalSpend = segmentSuppliers.reduce((sum, s) => sum + parseFloat(s.annualSpend), 0);
+  
+  // Helper to safely convert values to numbers
+  const toNumber = (val: any): number => {
+    if (typeof val === 'number') return val;
+    const parsed = parseFloat(String(val || 0));
+    return isNaN(parsed) ? 0 : parsed;
+  };
+  
+  const totalSpend = segmentSuppliers.reduce((sum, s) => sum + toNumber(s.annualSpend), 0);
   const avgRiskScore = segmentSuppliers.length > 0 
-    ? segmentSuppliers.reduce((sum, s) => sum + parseFloat(s.riskScore), 0) / segmentSuppliers.length 
+    ? segmentSuppliers.reduce((sum, s) => sum + toNumber(s.riskScore), 0) / segmentSuppliers.length 
     : 0;
   const avgPerformance = segmentSuppliers.length > 0 
-    ? segmentSuppliers.reduce((sum, s) => sum + parseFloat(s.performanceScore), 0) / segmentSuppliers.length 
+    ? segmentSuppliers.reduce((sum, s) => sum + toNumber(s.performanceScore), 0) / segmentSuppliers.length 
     : 0;
 
   const riskLevel = getRiskLevel(avgRiskScore);

@@ -48,13 +48,20 @@ function SupplierInsights() {
     );
   }
 
+  // Helper to safely convert values to numbers
+  const toNumber = (val: any): number => {
+    if (typeof val === 'number') return val;
+    const parsed = parseFloat(String(val || 0));
+    return isNaN(parsed) ? 0 : parsed;
+  };
+
   const topRiskSuppliers = suppliers
-    ?.filter(s => parseFloat(s.riskScore) >= 7)
-    .sort((a, b) => parseFloat(b.riskScore) - parseFloat(a.riskScore))
+    ?.filter(s => toNumber(s.riskScore) >= 7)
+    .sort((a, b) => toNumber(b.riskScore) - toNumber(a.riskScore))
     .slice(0, 3) || [];
 
   const topPerformers = suppliers
-    ?.sort((a, b) => parseFloat(b.performanceScore) - parseFloat(a.performanceScore))
+    ?.sort((a, b) => toNumber(b.performanceScore) - toNumber(a.performanceScore))
     .slice(0, 3) || [];
 
   return (
