@@ -10,15 +10,58 @@ import { useSuppliers } from "@/hooks/use-suppliers";
 import { SUPPLIER_SEGMENTS, getRiskLevel, RISK_LEVELS, formatCurrency, formatPercentage } from "@/lib/constants";
 
 function SupplierInsights() {
-  const { data: suppliers } = useSuppliers();
+  // Fetch suppliers with loading and error state handling for dashboard insights
+  const { data: suppliers, isLoading, error } = useSuppliers();
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <Card className="border border-border shadow-sm">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-center py-8">
+              <div className="text-center">
+                <div className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-r-transparent" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">Loading insights...</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <Card className="border border-destructive shadow-sm">
+          <CardContent className="pt-6">
+            <div className="text-center py-8">
+              <p className="text-sm text-destructive">Failed to load supplier insights</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Helper to safely convert values to numbers
+  const toNumber = (val: any): number => {
+    if (typeof val === 'number') return val;
+    const parsed = parseFloat(String(val || 0));
+    return isNaN(parsed) ? 0 : parsed;
+  };
 
   const topRiskSuppliers = suppliers
-    ?.filter(s => parseFloat(s.riskScore) >= 7)
-    .sort((a, b) => parseFloat(b.riskScore) - parseFloat(a.riskScore))
+    ?.filter(s => toNumber(s.riskScore) >= 7)
+    .sort((a, b) => toNumber(b.riskScore) - toNumber(a.riskScore))
     .slice(0, 3) || [];
 
   const topPerformers = suppliers
-    ?.sort((a, b) => parseFloat(b.performanceScore) - parseFloat(a.performanceScore))
+    ?.sort((a, b) => toNumber(b.performanceScore) - toNumber(a.performanceScore))
     .slice(0, 3) || [];
 
   return (

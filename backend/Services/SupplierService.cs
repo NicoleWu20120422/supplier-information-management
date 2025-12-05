@@ -36,9 +36,32 @@ namespace SupplierInformationManagement.Api.Services
             if (supplier == null)
                 return null;
 
+            // Update basic information
             supplier.Name = updated.Name;
+            supplier.Category = updated.Category;
             supplier.Commodity = updated.Commodity;
             supplier.ContactEmail = updated.ContactEmail;
+            
+            // Update segmentation and metrics
+            supplier.SegmentType = updated.SegmentType;
+            supplier.AnnualSpend = updated.AnnualSpend;
+            supplier.RiskScore = updated.RiskScore;
+            supplier.PerformanceScore = updated.PerformanceScore;
+            supplier.InnovationPotential = updated.InnovationPotential;
+            
+            // Update classification criteria
+            supplier.SupplierComplexity = updated.SupplierComplexity;
+            supplier.MarketAvailability = updated.MarketAvailability;
+            supplier.BusinessCriticality = updated.BusinessCriticality;
+            supplier.RelationshipType = updated.RelationshipType;
+            
+            // Update additional fields
+            supplier.ContactInfo = updated.ContactInfo;
+            supplier.Tags = updated.Tags;
+            supplier.Notes = updated.Notes;
+            
+            // Update timestamp
+            supplier.UpdatedAt = DateTime.UtcNow;
 
             await _db.SaveChangesAsync();
             return supplier;
