@@ -120,7 +120,8 @@ function SegmentCard({ segmentKey, segment, suppliers }: SegmentCardProps) {
 }
 
 export default function SupplierSegments() {
-  const { data: suppliers } = useSuppliers();
+  // Fetch suppliers data with loading and error state handling
+  const { data: suppliers, isLoading, error } = useSuppliers();
 
   const exportSegments = () => {
     if (!suppliers) return;
@@ -152,8 +153,76 @@ export default function SupplierSegments() {
     URL.revokeObjectURL(url);
   };
 
-  if (!suppliers) {
-    return <div>Loading supplier segments...</div>;
+  // Handle loading state - show loading indicator while fetching supplier data
+  if (isLoading) {
+    return (
+      <Card className="border border-border shadow-sm" data-testid="supplier-segments-loading">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">Supplier Segmentation Overview</CardTitle>
+          <p className="text-sm text-muted-foreground mt-1">
+            Loading supplier segments...
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">Fetching supplier segment data from backend...</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Handle error state - show error message if data fetch fails
+  if (error) {
+    return (
+      <Card className="border border-destructive shadow-sm" data-testid="supplier-segments-error">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold text-destructive">Error Loading Supplier Segments</CardTitle>
+          <p className="text-sm text-muted-foreground mt-1">
+            Failed to fetch supplier segment data
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+            <p className="text-sm text-destructive font-medium mb-2">
+              Unable to load supplier segments from backend API
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Error: {error instanceof Error ? error.message : 'Unknown error occurred'}
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Please check that the backend API is running and accessible.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Handle empty state - no suppliers available
+  if (!suppliers || suppliers.length === 0) {
+    return (
+      <Card className="border border-border shadow-sm" data-testid="supplier-segments-empty">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">Supplier Segmentation Overview</CardTitle>
+          <p className="text-sm text-muted-foreground mt-1">
+            No supplier data available
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-12">
+            <p className="text-sm text-muted-foreground">
+              No suppliers found. Add suppliers to see segmentation data.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (

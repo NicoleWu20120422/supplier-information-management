@@ -21,6 +21,17 @@ namespace SupplierInformationManagement.Api.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Category).IsRequired();
+                entity.Property(e => e.SegmentType).IsRequired();
+                
+                // Configure decimal precision for financial and performance metrics
+                entity.Property(e => e.AnnualSpend).HasColumnType("decimal(12,2)");
+                entity.Property(e => e.RiskScore).HasColumnType("decimal(3,1)");
+                entity.Property(e => e.PerformanceScore).HasColumnType("decimal(5,2)");
+                
+                // Set default values for timestamps
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
             });
 
             modelBuilder.Entity<Document>(entity =>

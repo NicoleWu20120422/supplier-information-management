@@ -10,7 +10,43 @@ import { useSuppliers } from "@/hooks/use-suppliers";
 import { SUPPLIER_SEGMENTS, getRiskLevel, RISK_LEVELS, formatCurrency, formatPercentage } from "@/lib/constants";
 
 function SupplierInsights() {
-  const { data: suppliers } = useSuppliers();
+  // Fetch suppliers with loading and error state handling for dashboard insights
+  const { data: suppliers, isLoading, error } = useSuppliers();
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <Card className="border border-border shadow-sm">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-center py-8">
+              <div className="text-center">
+                <div className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-r-transparent" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">Loading insights...</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <Card className="border border-destructive shadow-sm">
+          <CardContent className="pt-6">
+            <div className="text-center py-8">
+              <p className="text-sm text-destructive">Failed to load supplier insights</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const topRiskSuppliers = suppliers
     ?.filter(s => parseFloat(s.riskScore) >= 7)
